@@ -1,27 +1,19 @@
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
+
+	"github.com/crazyoptimist/go-microservice-poc/handlers"
 )
 
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		log.Println("Hello, world")
-		d, err := ioutil.ReadAll(r.Body)
-		if err != nil {
-			http.Error(w, "Oops", http.StatusBadRequest)
-			return
-		}
+	l := log.New(os.Stdout, "product-api", log.LstdFlags)
+	hh := handlers.NewHello(l)
 
-		fmt.Fprintf(w, "Hello %s", d)
-	})
+	sm := http.NewServeMux()
+	sm.Handle("/", hh)
 
-	http.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
-		log.Println("Goodbye, world")
-	})
-
-	http.ListenAndServe(":9090", nil)
+	http.ListenAndServe(":9090", sm)
 }
