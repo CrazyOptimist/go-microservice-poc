@@ -1,3 +1,3 @@
-module github.com/crazyoptimist/microservice-bootcamp
+module github.com/crazyoptimist/go-microservice-poc
 
 go 1.18
