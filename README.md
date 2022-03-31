@@ -1,4 +1,4 @@
-# Microservice with Go
+# REST API with Gorilla Mux
 
-Foundation of Microservice and gRPC in Go  
+Foundation of REST API in Go  
 Huge thanks to [Nick](https://github.com/nicholasjackson)
