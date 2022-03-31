@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -60,6 +61,13 @@ func (p *Products) MiddlewareProductValidation(next http.Handler) http.Handler {
 		err := prod.FromJSON(r.Body)
 		if err != nil {
 			http.Error(rw, "Error reading product", http.StatusBadRequest)
+			return
+		}
+
+		// validate the product
+		validationErr := prod.Validate()
+		if validationErr != nil {
+			http.Error(rw, fmt.Sprintf("Error validating product: %s", validationErr), http.StatusBadRequest)
 			return
 		}
 
